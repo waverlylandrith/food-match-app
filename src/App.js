@@ -1,17 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import FoodList from './components/FoodList';  // Import FoodList component
-import { fetchNearbyFood } from './utils/googleMapsApi';  // Import function to fetch food locations
+import FoodList from './components/FoodList'; // Import FoodList component
 
 function App() {
-  const [foodLocations, setFoodLocations] = useState([]);
-  const [swiped, setSwiped] = useState(new Set());
+  // Predefined list of restaurants (no API calls needed)
+  const [foodLocations, setFoodLocations] = useState([
+    {
+      id: 1,
+      name: "Joe's Pizza",
+      address: "123 Pizza St, New York, NY",
+    },
+    {
+      id: 2,
+      name: "Sushi World",
+      address: "456 Sushi Blvd, New York, NY",
+    },
+    {
+      id: 3,
+      name: "Taco Heaven",
+      address: "789 Taco Rd, New York, NY",
+    },
+    {
+      id: 4,
+      name: "Burger King",
+      address: "101 Burger Ln, New York, NY",
+    },
+  ]);
 
-  useEffect(() => {
-    // Fetch food locations when the component mounts
-    fetchNearbyFood()
-      .then((data) => setFoodLocations(data));
-  }, []);
+  const [swiped, setSwiped] = useState(new Set());
 
   const handleSwipeRight = (foodId) => {
     setSwiped(new Set(swiped.add(foodId))); // Mark food as swiped
