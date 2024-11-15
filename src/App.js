@@ -1,44 +1,43 @@
-import React, from 'react';
+import React, { useState } from 'react';
+import SwipeableViews from 'react-swipeable-views';
 import './App.css';
-import FoodList from './components/FoodList'; // Import FoodList component
 
-function App() {
-  // Predefined list of restaurants (no API calls needed)
-  const [foodLocations, setFoodLocations] = useState([
-    {
-      id: 1,
-      name: "Joe's Pizza",
-      address: "123 Pizza St, New York, NY",
-    },
-    {
-      id: 2,
-      name: "Sushi World",
-      address: "456 Sushi Blvd, New York, NY",
-    },
-    {
-      id: 3,
-      name: "Taco Heaven",
-      address: "789 Taco Rd, New York, NY",
-    },
-    {
-      id: 4,
-      name: "Burger King",
-      address: "101 Burger Ln, New York, NY",
-    },
-  ]);
+const App = () => {
+  // Sample list of food locations (replace this with real data later)
+  const foodLocations = [
+    { name: "Pizza Hut", type: "Pizza", id: 1 },
+    { name: "Taco Bell", type: "Mexican", id: 2 },
+    { name: "Burger King", type: "Burgers", id: 3 },
+    { name: "Subway", type: "Sandwiches", id: 4 }
+  ];
 
-  const [swiped, setSwiped] = useState(new Set());
+  // This state will store the places that both users swipe right on
+  const [swipedRight, setSwipedRight] = useState([]);
 
-  const handleSwipeRight = (foodId) => {
-    setSwiped(new Set(swiped.add(foodId))); // Mark food as swiped
+  // Function to handle swiping right (user selects a location)
+  const handleSwipeRight = (foodLocation) => {
+    setSwipedRight((prev) => [...prev, foodLocation]);
+  };
+
+  // Function to handle swiping left (user does not select a location)
+  const handleSwipeLeft = (foodLocation) => {
+    // Do nothing for now, can add functionality if needed
   };
 
   return (
     <div className="App">
       <h1>Food Match App</h1>
-      <FoodList foodLocations={foodLocations} onSwipeRight={handleSwipeRight} />
-    </div>
-  );
-}
-
-export default App;
+      <div>
+        <h2>Swipe to Choose Your Food!</h2>
+        <SwipeableViews>
+          {foodLocations.map((location) => (
+            <div key={location.id} className="food-card">
+              <h3>{location.name}</h3>
+              <p>{location.type}</p>
+              <div className="swipe-actions">
+                <button onClick={() => handleSwipeLeft(location)}>👎 Swipe Left</button>
+                <button onClick={() => handleSwipeRight(location)}>👍 Swipe Right</button>
+              </div>
+            </div>
+          ))}
+        </Swipeab
